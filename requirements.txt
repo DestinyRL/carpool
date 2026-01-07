@@ -1,0 +1,8 @@
+Django>=4.2
+djangorestframework
+djangorestframework-simplejwt
+django-cors-headers
+uvicorn
+fastapi
+pyjwt
+psycopg2-binary

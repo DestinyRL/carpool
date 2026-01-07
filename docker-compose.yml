@@ -1,0 +1,57 @@
+version: '3.8'
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: carpool_django/Dockerfile
+    volumes:
+      - .:/app:cached
+      - db-data:/app/carpool_django
+    ports:
+      - "8000:8000"
+    environment:
+      - CARPOOL_SECRET_KEY=dev-secret-for-carpool-backend
+      - DOCKER_ENV=1
+      - POSTGRES_DB=carpool
+      - POSTGRES_USER=carpool_user
+      - POSTGRES_PASSWORD=carpool_password
+      - POSTGRES_HOST=db
+      - POSTGRES_PORT=5432
+    depends_on:
+      - db
+      - fastapi
+
+  db:
+    image: postgres:15
+    environment:
+      - POSTGRES_DB=carpool
+      - POSTGRES_USER=carpool_user
+      - POSTGRES_PASSWORD=carpool_password
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  fastapi:
+    build:
+      context: .
+      dockerfile: fastapi_app/Dockerfile
+    volumes:
+      - .:/app:cached
+      - db-data:/app/carpool_django
+    ports:
+      - "8080:8080"
+    environment:
+      - CARPOOL_SECRET_KEY=dev-secret-for-carpool-backend
+      - DOCKER_ENV=1
+      - POSTGRES_DB=carpool
+      - POSTGRES_USER=carpool_user
+      - POSTGRES_PASSWORD=carpool_password
+      - POSTGRES_HOST=db
+      - POSTGRES_PORT=5432
+    depends_on:
+      - db
+
+volumes:
+  db-data:
