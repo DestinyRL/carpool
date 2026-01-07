@@ -11,7 +11,6 @@ RUN pip install --no-cache-dir -r /app/requirements.txt && \
 COPY . /app
 
 ENV CARPOOL_SECRET_KEY=dev-secret-for-carpool-backend
-ENV DOCKER_ENV=1
 ENV POSTGRES_DB=carpool
 ENV POSTGRES_USER=carpool_user
 ENV POSTGRES_PASSWORD=carpool_password

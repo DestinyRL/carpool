@@ -18,7 +18,5 @@ ENV POSTGRES_PASSWORD=carpool_password
 ENV POSTGRES_HOST=db
 ENV POSTGRES_PORT=5432
 
-WORKDIR /app/carpool_django
-
-# Run migrations at container start (entrypoint will run them too)
-CMD ["sh", "-c", "python manage.py migrate --noinput && uvicorn carpool_django.asgi:application --host 0.0.0.0 --port 8000"]
+# Run migrations and start Django development server
+CMD ["sh", "-c", "cd /app/carpool_django && python manage.py migrate --noinput && python manage.py runserver 0.0.0.0:8000"]
