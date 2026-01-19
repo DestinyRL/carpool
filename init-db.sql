@@ -1,0 +1,3 @@
+-- Initializes the carpool database
+-- Note: Database is created automatically by POSTGRES_DB environment variable
+-- This file can be used for additional initialization if needed
